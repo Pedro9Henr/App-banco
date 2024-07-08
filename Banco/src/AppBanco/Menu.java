@@ -122,19 +122,31 @@ public class Menu {
         System.out.print("Nome: ");
         String nome = entrada.nextLine();
 
-        System.out.print("CPF(4 digitos): ");
+        System.out.print("CPF (4 dígitos): ");
         int cpf = entrada.nextInt();
         System.out.print("Senha (de apenas 3 dígitos): ");
         int senha = entrada.nextInt();
         System.out.print("Idade: ");
         int idade = entrada.nextInt();
+        entrada.nextLine();
 
-        Acount novaConta = new Acount(nome, cpf, senha, idade);
-        contas.add(novaConta);
-
-        System.out.println("Conta cadastrada com sucesso!");
+        if (!existeContaComCpf(cpf)) {
+            Acount novaConta = new Acount(nome, cpf, senha, idade);
+            contas.add(novaConta);
+            System.out.println("Conta cadastrada com sucesso!");
+        } else {
+            System.out.println("ERRO: Já possui uma conta cadastrada neste CPF!");
+        }
     }
 
+    private boolean existeContaComCpf(int cpf) {
+        for (Acount conta : contas) {
+            if (conta.getCPF() == cpf) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     private void aguardarEnter() {
